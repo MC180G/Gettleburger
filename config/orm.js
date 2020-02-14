@@ -1,4 +1,5 @@
 // Object Relational Mapper (ORM)
+const connection = require("../config/connection.js");
 
 // The ?? signs are for swapping out table or column names
 // The ? signs are for swapping out other values
