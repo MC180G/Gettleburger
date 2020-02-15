@@ -6,6 +6,7 @@ CREATE TABLE burgers (
 
     id INT NOT NULL AUTO_INCREMENT,
     burger_name VARCHAR(100) NOT NULL,
-    launched BOOLEAN 
-)
+    launched BOOLEAN DEFAULT false,
+    PRIMARY KEY (id)
+);
 

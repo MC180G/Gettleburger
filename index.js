@@ -1,31 +1,29 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const exphbs = require("express-handlebars");
-// const methodOverride = require("method-override");
+var express = require("express");
 
-const app = express()
-const PORT = process.env.PORT || 3660;
+var PORT = process.env.PORT || 5000;
 
-// var db = require("../db/");
+var app = express();
 
-// Sets up the Express app to handle data parsing
-app.use(express.static(process.cwd() + "/public"));
+// Serve static content for the app from the "public" directory in the application directory.
+app.use(express.static("public"));
 
-app.use(bodyParser.urlencoded({ extended: false }));
+// Parse application body as JSON
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-// app.use(methodOverride("_method"));
-
-
-//app.use(express.static("public"));
+// Set Handlebars.
+var exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-const burgerRoutes = require("./controllers/burgers_controller.js"); 
-app.use(burgerRoutes);
+// Import routes and give the server access to them.
+var routes = require("./controllers/burgers_controllers.js");
 
-db.sequelize.sync({ force: true }).then(function() {
-  app.listen(PORT, function() {
-    console.log("App listening on PORT " + PORT);
-  });
+app.use(routes);
+
+// Start our server so that it can begin listening to client requests.
+app.listen(PORT, function() {
+  // Log (server-side) when our server has started
+  console.log("Server listening on: http://localhost:" + PORT);
 });
